@@ -56,7 +56,7 @@ Navigate to:
 ## 🎥 Video Demo
 
 Paste your video demo link here:\
-**VIDEO_URL_HERE**
+**https://drive.google.com/file/d/1uIKq3fJW3aD72v74SEk1r05LhFIRUAoH/view?usp=sharing**
 
 ## 📸 Screenshots
 
