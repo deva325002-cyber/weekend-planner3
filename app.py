@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from groq import Groq
 import os
+import re
 
 # Get the directory where this script is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -27,11 +28,11 @@ system_prompt = """You are an enthusiastic and helpful AI Weekend Planner assist
 CRITICAL RULE: Ask ONLY ONE question per message. NEVER ask two questions in one message.
 
 Gather information in this exact order, one question at a time:
-1. Energy level — Options: low, medium, high (or custom)
-2. Budget — Options: low, medium, high (or custom)
-3. Which time of day to spend the budget — Options: morning, afternoon, evening
-4. Activity interests — Options: outdoor, dining, entertainment, shopping
-5. Who they're spending the weekend with — Options: solo, friends, family, partner
+1. Energy level
+2. Budget
+3. Which time of day to spend the budget
+4. Activity interests
+5. Who they're spending the weekend with
 
 After collecting all 5 answers, generate a detailed weekend plan with:
 - Morning section
@@ -44,12 +45,37 @@ Format activities clearly with bold names like:
 For the time of day they chose for their budget, suggest activities matching their budget level.
 For other times, suggest free or very low-cost activities.
 
+CRITICAL FORMAT RULE:
+Whenever you ask a question, you MUST end your message with EXACTLY 3 suggested options on the very last line in this format:
+[OPTIONS: option1 | option2 | option3]
+
+The 3 options should be the most relevant and helpful choices for that specific question. Pick them intelligently based on the context of the question. For example:
+- For energy level: [OPTIONS: Low energy | Medium energy | High energy]
+- For budget: [OPTIONS: Budget-friendly | Moderate | Splurge-worthy]
+- For time of day: [OPTIONS: Morning | Afternoon | Evening]
+- For interests: [OPTIONS: Outdoor adventures | Food & Dining | Entertainment]
+- For companions: [OPTIONS: Solo | With friends | Family outing]
+
+Do NOT include the [OPTIONS: ...] line when you are delivering the final weekend plan.
+
 Rules:
 - One question per message, always
+- Always end questions with [OPTIONS: ...] line containing exactly 3 choices
 - Wait for the user to answer before asking the next question
 - Be warm, encouraging, and conversational
 - Keep suggestions specific and inspiring
 - Do not include prices or exact times unless asked"""
+
+
+def parse_options(message):
+    """Extract [OPTIONS: ...] from the AI message and return cleaned message + options list."""
+    match = re.search(r'\[OPTIONS:\s*(.+?)\]\s*$', message, re.IGNORECASE)
+    if match:
+        options_str = match.group(1)
+        options = [opt.strip() for opt in options_str.split('|') if opt.strip()]
+        cleaned_message = message[:match.start()].rstrip()
+        return cleaned_message, options
+    return message, []
 
 
 @app.route('/')
@@ -84,13 +110,14 @@ def start_chat():
             max_tokens=512
         )
         initial_message = response.choices[0].message.content
+        cleaned_message, options = parse_options(initial_message)
 
         chat_sessions[session_id] = [
             {"role": "system", "content": system_prompt},
             {"role": "assistant", "content": initial_message}
         ]
 
-        return jsonify({'message': initial_message, 'session_id': session_id})
+        return jsonify({'message': cleaned_message, 'options': options, 'session_id': session_id})
 
     except Exception as e:
         print(f"[ERROR] start_chat: {e}")
@@ -122,12 +149,13 @@ def send_message():
             max_tokens=1024
         )
         assistant_message = response.choices[0].message.content
+        cleaned_message, options = parse_options(assistant_message)
 
         # Save updated history
         chat_sessions[session_id].append({"role": "user", "content": user_message})
         chat_sessions[session_id].append({"role": "assistant", "content": assistant_message})
 
-        return jsonify({'message': assistant_message, 'session_id': session_id})
+        return jsonify({'message': cleaned_message, 'options': options, 'session_id': session_id})
 
     except Exception as e:
         print(f"[ERROR] send_message: {e}")

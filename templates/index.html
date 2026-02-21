@@ -88,6 +88,9 @@
                 const data = await res.json();
                 if (data.message) {
                     addMessage('assistant', data.message);
+                    if (data.options && data.options.length > 0) {
+                        showOptions(data.options);
+                    }
                 } else {
                     addMessage('assistant', data.error || 'Error starting chat. Please refresh.');
                 }
@@ -136,6 +139,9 @@
 
                 if (res.ok) {
                     addMessage('assistant', data.message);
+                    if (data.options && data.options.length > 0) {
+                        showOptions(data.options);
+                    }
                     currentStep = Math.min(currentStep + 1, 6);
                     updateProgress();
                 } else {
@@ -162,7 +168,6 @@
                         <div class="markdown-content">${marked.parse(text)}</div>
                     </div>
                 `;
-                setTimeout(() => showOptions(text), 350);
             } else {
                 el.innerHTML = `
                     <div class="msg-bubble user-bubble">
@@ -198,29 +203,11 @@
             if (el) el.remove();
         }
 
-        function showOptions(message) {
+        function showOptions(options) {
             const optionsContainer = document.getElementById('optionsContainer');
             optionsContainer.innerHTML = '';
-            const msg = message.toLowerCase();
 
-            let options = [];
-
-            // Ordered by specificity — most specific checks first
-            if (msg.includes('energy') || msg.includes('energetic')) {
-                options = ['Low', 'Medium', 'High', 'Custom'];
-            } else if (msg.includes('budget')) {
-                options = ['Low', 'Medium', 'High', 'Custom'];
-            } else if (msg.includes('which time') || msg.includes('time of day') || msg.includes('time would you')) {
-                options = ['Morning', 'Afternoon', 'Evening'];
-            } else if (msg.includes('activity') || msg.includes('interest') || msg.includes('appeal')) {
-                options = ['Outdoor', 'Dining', 'Entertainment', 'Shopping'];
-            } else if (msg.includes('who') && (msg.includes('with') || msg.includes('going') || msg.includes('join'))) {
-                options = ['Solo', 'Friends', 'Family', 'Partner'];
-            } else if (msg.includes('constraint') || msg.includes('limitation')) {
-                options = ['No constraints', 'Limited time', 'Avoid certain activities'];
-            }
-
-            if (options.length > 0) {
+            if (options && options.length > 0) {
                 options.forEach(option => {
                     const btn = document.createElement('button');
                     btn.className = 'option-btn';
