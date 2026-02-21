@@ -17,7 +17,7 @@ api_key = os.environ.get("GROQ_API_KEY", "YOUR_GROQ_API_KEY_HERE")
 client = Groq(api_key=api_key)
 
 # Valid Groq model — use llama3-70b or llama-3.1-70b-versatile
-MODEL = "llama-3.1-70b-versatile"
+MODEL = "openai/gpt-oss-120b"
 
 # Store chat sessions in memory
 chat_sessions = {}
