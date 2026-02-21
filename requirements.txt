@@ -1,2 +1,2 @@
 Flask==2.3.3
-groq==0.4.1
+groq==0.4.1gunicorn>=21.0.0
