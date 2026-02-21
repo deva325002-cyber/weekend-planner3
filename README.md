@@ -64,11 +64,13 @@ Add your screenshots by replacing the filenames:
 
 ### Screenshot 1
 
-![Screenshot 1](public/Screenshot 2026-02-21 100515.png)
+<img width="1055" height="872" alt="Screenshot 2026-02-21 100515" src="https://github.com/user-attachments/assets/639e0cd6-fee1-49f5-a061-e87e2bce18af" />
+
 
 ### Screenshot 2
 
-![Screenshot 2](public\Screenshot 2026-02-21 100653.png)
+<img width="1141" height="619" alt="Screenshot 2026-02-21 100653" src="https://github.com/user-attachments/assets/4a0547f0-efd4-4c7e-8587-c8ac7fc35e34" />
+
 
 ## ⚙️ Configuration
 
