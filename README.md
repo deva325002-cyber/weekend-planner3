@@ -1,80 +1,97 @@
 # 🤖 AI Day Planner Website
 
-A Flask-based web application for your AI Day Planner using the Gemini API.
+A Flask-based web application for your AI Day Planner using the Gemini
+API.
 
 ## 📋 Project Structure
 
-```
-weekend-planner/
-├── app.py                 # Flask application
-├── main.py               # Original CLI version
-├── requirements.txt      # Python dependencies
-├── templates/
-│   └── index.html       # Chat interface HTML
-└── static/
-    └── style.css        # Styling
-```
+    weekend-planner/
+    ├── app.py                 # Flask application
+    ├── main.py                # Original CLI version
+    ├── requirements.txt       # Python dependencies
+    ├── templates/
+    │   └── index.html         # Chat interface HTML
+    └── static/
+        └── style.css          # Styling
 
 ## 🚀 Getting Started
 
 ### 1. Install Dependencies
 
-```bash
+``` bash
 pip install -r requirements.txt
 ```
 
 ### 2. Run the Flask App
 
-```bash
+``` bash
 python app.py
 ```
 
-The application will start on `http://localhost:5000`
+The application will start on `http://localhost:5000`.
 
 ### 3. Open in Browser
 
-Open your web browser and navigate to:
-```
-http://localhost:5000
-```
+Navigate to:
+
+    http://localhost:5000
 
 ## ✨ Features
 
-- 💬 Real-time chat interface with the AI Day Planner
-- 🎨 Modern, responsive UI design
-- 📱 Works on desktop and mobile devices
-- ⏰ Personalized day planning
-- 🎯 Budget and preference consideration
-- 🌅 Morning, afternoon, and evening planning
+-   💬 Real-time chat interface\
+-   🎨 Modern, responsive UI\
+-   📱 Desktop + mobile support\
+-   ⏰ Personalized day planning\
+-   🎯 Budget + preference handling\
+-   🌅 Morning, afternoon, evening breakdown
 
 ## 🎯 How to Use
 
-1. Start a conversation with the AI Day Planner
-2. Tell it about your mood, budget, and preferences
-3. Get a personalized day plan with specific times and activities
-4. Ask follow-up questions to refine your plan
-5. Type "quit" to end the conversation
+1.  Start chatting with the planner\
+2.  Share mood, budget, preferences\
+3.  Receive a structured day plan\
+4.  Ask follow‑up questions\
+5.  Type **"quit"** to end the chat
+
+## 🎥 Video Demo
+
+Paste your video demo link here:\
+**https://drive.google.com/file/d/1uIKq3fJW3aD72v74SEk1r05LhFIRUAoH/view?usp=sharing**
+
+## 📸 Screenshots
+
+Add your screenshots by replacing the filenames:
+
+### Screenshot 1
+
+<img width="1055" height="872" alt="Screenshot 2026-02-21 100515" src="https://github.com/user-attachments/assets/639e0cd6-fee1-49f5-a061-e87e2bce18af" />
+
+
+### Screenshot 2
+
+<img width="1141" height="619" alt="Screenshot 2026-02-21 100653" src="https://github.com/user-attachments/assets/4a0547f0-efd4-4c7e-8587-c8ac7fc35e34" />
+
 
 ## ⚙️ Configuration
 
-The API key is already set in `app.py`. If you want to use a different key:
+The API key is set in `app.py`.\
+To use a different key: 1. Open `app.py` 2. Replace the `api_key` value\
+3. Or set the environment variable:
 
-1. Open `app.py`
-2. Replace the `api_key` variable with your Gemini API key
-3. Or set the environment variable `GEMINI_API_KEY`
+    GEMINI_API_KEY=your_key_here
 
 ## 🔧 Troubleshooting
 
-- **Port already in use**: Change the port in `app.py` (line: `app.run(debug=True, port=5000)`)
-- **API Key issues**: Verify your Gemini API key is valid
-- **Connection errors**: Check your internet connection
+-   **Port in use** → Change port in `app.py`\
+-   **API errors** → Verify your Gemini API key\
+-   **Network errors** → Check your internet
 
 ## 📝 Notes
 
-- The original CLI version is available in `main.py`
-- Each browser session has its own independent chat history
-- Messages are not persisted between page reloads
+-   CLI version in `main.py`\
+-   Each session has independent chat history\
+-   History resets on reload
 
----
+------------------------------------------------------------------------
 
 Enjoy your personalized day planning with AI! 🌟
